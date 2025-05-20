@@ -27,7 +27,7 @@ To set up the project, please install the required dependencies and activate the
 5. Install the dependencies listed in `requirements.txt`:
 
     ```bash
-    pip install -r requirements.txt
+    pip install -r dev-requirements.txt
     ```
 
 You're now ready to use the project!
