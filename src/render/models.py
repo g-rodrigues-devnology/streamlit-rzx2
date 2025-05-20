@@ -18,9 +18,22 @@ class SentimentScore:
             life_cost=data['Custo de Vida'],
             average=data['Geral']
         )
-    
-    def compare(self, other: 'SentimentScore') -> float:
-        return self.average - other.average
+
+@dataclass
+class Comment:
+    permalink: str
+    karma: float
+    scores: SentimentScore
+    body: str
+
+    @staticmethod
+    def from_json(data: dict) -> 'Comment':
+        return Comment(
+            permalink=data['permalink'],
+            karma=data['score'],
+            scores=SentimentScore.from_json(data['sentiment']),
+            body=data['text']
+        )
 
 @dataclass
 class CountryData:
@@ -29,6 +42,12 @@ class CountryData:
     code: str
     flag: str
     data_count: int
+    comments: list[Comment]
+
+    most_disliked: Comment | None = None
+    most_liked: Comment | None = None
+    most_positive: Comment | None = None
+    most_negative: Comment | None = None
 
     def __str__(self) -> str:
         return (
